@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wise Choice — Suggestion Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Baloo+2:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   WISE CHOICE — SUGGESTION HUB
+   THEME: Navy + Gold (same family as WBCS Ultimate Study Hub)
+   ========================================================= */
+:root{
+  --bg:#04080f; --navy:#070f1d; --card:#0c1828; --card2:#101f32;
+  --border:#1c3158; --border2:#213a66; --gold:#f5c518; --gold2:#ffe27a;
+  --accent:#ff6b35; --text:#ddeaff; --muted:#6a85a8;
+  --green:#2ecc71; --red:#ff5d5d; --purple:#a78bfa; --blue:#4fc3f7;
+}
+/* ---- LIGHT MODE — activated when <html data-theme="light"> ---- */
+html[data-theme="light"]{
+  --bg:#eef1f8; --navy:#ffffff; --card:#ffffff; --card2:#f3f6fc;
+  --border:#d7deee; --border2:#c3cee6; --gold:#c8880a; --gold2:#a9700a;
+  --accent:#e0562a; --text:#1a2540; --muted:#5b6b8a;
+  --green:#1f9d55; --red:#e0393e; --purple:#7c3aed; --blue:#0284c7;
+}
+html[data-theme="light"] body{
+  background-image:radial-gradient(circle at 15% 20%,rgba(200,136,10,.07) 0%,transparent 35%),
+                    radial-gradient(circle at 85% 10%,rgba(224,86,42,.06) 0%,transparent 35%),
+                    radial-gradient(circle at 50% 90%,rgba(2,132,199,.06) 0%,transparent 40%);
+}
+html[data-theme="light"] .subject-card,
+html[data-theme="light"] .folder-card,
+html[data-theme="light"] .item-row,
+html[data-theme="light"] .semester-banner{
+  box-shadow:0 6px 18px rgba(30,50,90,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Baloo 2','Segoe UI',sans-serif;background-color:var(--bg);
+  background-image:radial-gradient(circle at 15% 20%,rgba(245,197,24,.08) 0%,transparent 35%),
+                    radial-gradient(circle at 85% 10%,rgba(255,107,53,.08) 0%,transparent 35%),
+                    radial-gradient(circle at 50% 90%,rgba(56,120,255,.08) 0%,transparent 40%);
+  background-attachment:fixed;color:var(--text);min-height:100vh;
+  transition:background-color .3s ease, color .3s ease;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:30px 18px 70px;}
+::-webkit-scrollbar{width:8px;} ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:8px;}
+
+/* ---------- THEME TOGGLE ---------- */
+#themeToggleBtn{position:fixed;top:16px;right:16px;z-index:1500;width:44px;height:44px;border-radius:50%;
+  border:1.5px solid var(--border2);background:var(--card);color:var(--gold2);font-size:19px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,0,0,.3);transition:.25s;}
+#themeToggleBtn:hover{transform:scale(1.08);border-color:var(--gold);}
+
+/* ---------- HEADER ---------- */
+header.hero{text-align:center;margin-bottom:28px;position:relative;}
+.header-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(245,197,24,.15),rgba(255,107,53,.1));
+  border:1px solid var(--border);color:var(--gold2);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:6px 16px;border-radius:20px;margin-bottom:14px;}
+header h1{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:700;
+  background:linear-gradient(100deg,var(--gold2) 0%,var(--gold) 25%,var(--accent) 50%,var(--gold) 75%,var(--gold2) 100%);
+  background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  text-transform:uppercase;letter-spacing:1px;filter:drop-shadow(0 0 18px rgba(245,197,24,.25));margin-bottom:8px;
+  animation:shine 6s linear infinite;}
+@keyframes shine{to{background-position:220% center;}}
+header .sub{color:var(--muted);font-size:14.5px;font-weight:600;}
+.header-divider{width:140px;height:3px;margin:18px auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:3px;}
+
+/* ---------- SEMESTER BANNER ---------- */
+.semester-banner{max-width:560px;margin:22px auto 0;background:linear-gradient(160deg,var(--card),var(--card2));
+  border:1.5px solid var(--gold);border-radius:14px;padding:14px 20px;text-align:center;box-shadow:0 10px 26px rgba(0,0,0,.28);}
+.semester-banner .tag{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold2);margin-bottom:4px;}
+.semester-banner .lbl{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--text);}
+.semester-banner .note{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+/* ---------- SECTION TITLES ---------- */
+.section-title{display:flex;align-items:center;gap:14px;margin:38px 0 18px;}
+.section-title .st-line{flex:1;height:2px;background:linear-gradient(90deg,var(--border2),transparent);border-radius:2px;}
+.section-title span.txt{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--gold2);letter-spacing:1px;text-transform:uppercase;white-space:nowrap;}
+
+/* ---------- TOP-LEVEL TAB SWITCHER (B.A. / B.Sc. / B.Com.) ---------- */
+.top-tabs{display:flex;background:var(--navy);border:1.5px solid var(--border2);border-radius:26px;padding:5px;
+  max-width:460px;margin:32px auto 0;gap:4px;box-shadow:0 6px 18px rgba(0,0,0,.25);}
+.top-tab{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 8px;border-radius:22px;
+  font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;color:var(--muted);cursor:pointer;
+  transition:.25s;border:none;background:transparent;}
+.top-tab .tt-ic{font-size:16px;}
+.top-tab.active{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#181203;box-shadow:0 6px 16px rgba(245,197,24,.35);}
+
+/* ---------- BACK ROW / BUTTONS ---------- */
+.back-row{margin-bottom:18px;}
+.btn{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;padding:10px 20px;border-radius:10px;
+  border:1.5px solid var(--border2);background:var(--card);color:var(--text);cursor:pointer;transition:.2s;}
+.btn:hover{border-color:var(--gold);}
+.btn-outline{background:transparent;}
+.btn-sm{padding:8px 16px;font-size:13px;}
+.btn-gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#181203;border:none;
+  padding:13px 26px;font-size:15px;box-shadow:0 8px 20px rgba(245,197,24,.3);}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(245,197,24,.4);}
+
+/* ---------- SCREENS ---------- */
+.screen{display:none;} .screen.active{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);}}
+
+/* ---------- SUBJECT / FOLDER GRID ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;}
+.subject-card{position:relative;background:linear-gradient(160deg,var(--card) 0%,var(--card2) 55%,var(--navy) 100%);
+  border:1.5px solid var(--accent-a,var(--border));border-radius:18px;padding:26px 18px 22px;text-align:center;cursor:pointer;
+  transition:.3s cubic-bezier(.2,.9,.3,1.3);overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.32);}
+.subject-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent-a,var(--gold)),var(--accent-b,var(--accent)));}
+.subject-card:hover{transform:translateY(-6px) scale(1.02);border-color:var(--accent-a);box-shadow:0 16px 36px rgba(245,197,24,.2);}
+.subject-card .icon-badge{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 12px;font-size:27px;background:linear-gradient(145deg,var(--accent-a,var(--gold)),var(--accent-b,var(--accent)));
+  border:1.5px solid rgba(255,255,255,.25);box-shadow:0 6px 18px -4px var(--accent-a,var(--gold));}
+.subject-card h3{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;margin-bottom:4px;}
+.subject-card p{font-size:11.5px;color:var(--muted);}
+.subject-card .cnt{display:inline-block;margin-top:10px;font-size:10.5px;background:rgba(245,197,24,.12);color:var(--gold2);
+  padding:3px 10px;border-radius:20px;border:1px solid var(--border);}
+.subject-card .exam-date{display:block;font-size:10.5px;color:var(--muted);margin-top:8px;}
+.status-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;margin-top:8px;}
+.status-badge.ready{background:rgba(46,204,113,.15);color:var(--green);border:1px solid rgba(46,204,113,.35);}
+.status-badge.pending{background:rgba(255,176,32,.15);color:#ffb020;border:1px solid rgba(255,176,32,.35);}
+.grid .subject-card:nth-child(8n+1){--accent-a:#f5c518;--accent-b:#ff8a00;}
+.grid .subject-card:nth-child(8n+2){--accent-a:#4fc3f7;--accent-b:#3878ff;}
+.grid .subject-card:nth-child(8n+3){--accent-a:#ff6b9d;--accent-b:#ff3d68;}
+.grid .subject-card:nth-child(8n+4){--accent-a:#7ee787;--accent-b:#12b76a;}
+.grid .subject-card:nth-child(8n+5){--accent-a:#c084fc;--accent-b:#8b5cf6;}
+.grid .subject-card:nth-child(8n+6){--accent-a:#ffb020;--accent-b:#ff6b35;}
+.grid .subject-card:nth-child(8n+7){--accent-a:#4fd1c5;--accent-b:#0e9488;}
+.grid .subject-card:nth-child(8n+8){--accent-a:#ff8a8a;--accent-b:#e53e5e;}
+
+/* ---------- FOLDER CARDS (Suggestions / Study Materials) ---------- */
+.folder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:640px;margin:0 auto;}
+.folder-card{background:linear-gradient(160deg,var(--card),var(--card2));border:1.5px solid var(--border);border-radius:18px;
+  padding:32px 20px;text-align:center;cursor:pointer;transition:.25s;}
+.folder-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 14px 32px rgba(245,197,24,.18);}
+.folder-card .f-ic{font-size:44px;margin-bottom:14px;}
+.folder-card h3{font-family:'Rajdhani',sans-serif;font-size:20px;color:var(--text);margin-bottom:6px;}
+.folder-card p{font-size:12px;color:var(--muted);}
+.folder-card .cnt{display:inline-block;margin-top:10px;font-size:10.5px;background:rgba(245,197,24,.12);color:var(--gold2);
+  padding:3px 10px;border-radius:20px;border:1px solid var(--border);}
+
+/* ---------- RESOURCE ITEM LIST ---------- */
+.item-row{display:flex;align-items:center;gap:14px;background:linear-gradient(160deg,var(--card),var(--card2));
+  border:1.5px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:.2s;}
+.item-row:hover{border-color:var(--gold);transform:translateX(4px);}
+.item-row .i-ic{font-size:22px;width:40px;height:40px;border-radius:10px;background:var(--navy);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border2);}
+.item-row .i-body{flex:1;min-width:0;}
+.item-row h4{font-family:'Rajdhani',sans-serif;font-size:15.5px;color:var(--text);margin-bottom:2px;}
+.item-row .i-type{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.item-row .i-arrow{color:var(--gold2);font-size:18px;flex-shrink:0;}
+.ca-empty{color:var(--muted);font-size:13px;text-align:center;padding:30px 6px;}
+
+footer{text-align:center;margin-top:50px;color:var(--muted);font-size:12px;}
+
+/* ---------- YOUTUBE SUBSCRIBE GATE (first screen visitors see) ---------- */
+body.gate-open{overflow:hidden;}
+#ytGate{position:fixed;inset:0;z-index:2000;
+  background:radial-gradient(circle at 50% 20%,rgba(245,197,24,.08),transparent 60%),rgba(2,6,14,.97);
+  display:flex;align-items:center;justify-content:center;padding:24px;}
+.yt-card{max-width:400px;width:100%;background:linear-gradient(160deg,var(--card),var(--card2));
+  border:1.5px solid var(--gold);border-radius:22px;padding:34px 26px;text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.yt-logo-box{width:78px;height:78px;border-radius:20px;margin:0 auto 18px;display:flex;align-items:center;
+  justify-content:center;font-size:36px;background:linear-gradient(145deg,var(--gold2),var(--accent));
+  border:1.5px solid rgba(255,255,255,.25);box-shadow:0 8px 22px -4px var(--gold);overflow:hidden;}
+.yt-logo-box img{width:100%;height:100%;object-fit:cover;}
+.yt-card h2{font-family:'Rajdhani',sans-serif;font-size:22px;color:var(--text);margin-bottom:10px;}
+.yt-card p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:6px;}
+.yt-channel-name{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--gold2);font-size:16px;margin:10px 0 22px;}
+.yt-visit{display:inline-flex;align-items:center;gap:8px;width:100%;justify-content:center;
+  background:linear-gradient(135deg,#ff0000,#ff4d4d);color:#fff;border:none;border-radius:12px;
+  padding:14px 20px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15.5px;cursor:pointer;
+  margin-bottom:12px;transition:.2s;box-shadow:0 8px 20px rgba(255,0,0,.3);}
+.yt-visit:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,0,0,.4);}
+.yt-continue{width:100%;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#181203;
+  border:none;border-radius:12px;padding:13px 20px;font-family:'Rajdhani',sans-serif;font-weight:700;
+  font-size:15px;cursor:pointer;transition:.2s;box-shadow:0 8px 20px rgba(245,197,24,.3);}
+.yt-continue:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;}
+.yt-continue:not(:disabled):hover{transform:translateY(-2px);}
+.yt-hint{font-size:11px;color:var(--muted);margin-top:14px;}
+</style>
+</head>
+<body>
+
+<!-- ============ YOUTUBE SUBSCRIBE GATE — first thing visitors see ============ -->
+<div id="ytGate">
+  <div class="yt-card">
+    <div class="yt-logo-box" id="ytLogoBox">▶️</div>
+    <h2>Welcome to Wise Choice!</h2>
+    <p>Please visit &amp; subscribe to our YouTube channel to support us — it helps us keep bringing you free suggestions and study materials.</p>
+    <div class="yt-channel-name" id="ytChannelNameLabel">Loading...</div>
+    <button class="yt-visit" onclick="visitChannel()">▶️ Visit &amp; Subscribe</button>
+    <button class="yt-continue" id="ytContinueBtn" onclick="closeYtGate()" disabled>🔒 Continue to Suggestion Hub</button>
+    <div class="yt-hint">Tap "Visit & Subscribe" first to unlock the button above</div>
+  </div>
+</div>
+
+<button id="themeToggleBtn" onclick="toggleTheme()">🌙</button>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="header-badge">🏛️ WISE CHOICE PRESENTS</div>
+    <h1>Suggestion Hub</h1>
+    <div class="sub">Semester-Wise Suggestions &amp; Study Materials — Updated Before Every Exam</div>
+    <div class="header-divider"></div>
+    <div class="semester-banner">
+      <div class="tag">Currently Active</div>
+      <div class="lbl" id="semesterLabel">Loading...</div>
+      <div class="note" id="semesterNote"></div>
+    </div>
+  </header>
+
+  <!-- ============ TOP-LEVEL TAB SWITCHER ============ -->
+  <div class="top-tabs" id="topTabs">
+    <button class="top-tab active" id="tabBA" onclick="setTopTab('ba')"><span class="tt-ic">📖</span> B.A.</button>
+    <button class="top-tab" id="tabBSC" onclick="setTopTab('bsc')"><span class="tt-ic">🔬</span> B.Sc.</button>
+    <button class="top-tab" id="tabBCOM" onclick="setTopTab('bcom')"><span class="tt-ic">💼</span> B.Com.</button>
+  </div>
+
+  <!-- ============ SCREEN: B.A. SUBJECTS ============ -->
+  <section id="screen-ba" class="screen active">
+    <div class="section-title"><div class="st-line"></div><span class="txt">B.A. — Choose Your Subject</span><div class="st-line"></div></div>
+    <div class="grid" id="baGrid"></div>
+  </section>
+
+  <!-- ============ SCREEN: B.Sc. SUBJECTS ============ -->
+  <section id="screen-bsc" class="screen">
+    <div class="section-title"><div class="st-line"></div><span class="txt">B.Sc. — Choose Your Subject</span><div class="st-line"></div></div>
+    <div class="grid" id="bscGrid"></div>
+  </section>
+
+  <!-- ============ SCREEN: B.Com. SUBJECTS ============ -->
+  <section id="screen-bcom" class="screen">
+    <div class="section-title"><div class="st-line"></div><span class="txt">B.Com. — Choose Your Subject</span><div class="st-line"></div></div>
+    <div class="grid" id="bcomGrid"></div>
+  </section>
+
+  <!-- ============ SCREEN: SUBJECT FOLDERS (Suggestions / Study Materials) ============ -->
+  <section id="screen-folders" class="screen">
+    <div class="back-row"><button class="btn btn-outline btn-sm" id="foldersBackBtn">← Back to Subjects</button></div>
+    <div class="section-title"><div class="st-line"></div><span class="txt" id="foldersHeading">Subject</span><div class="st-line"></div></div>
+    <div class="semester-banner" id="foldersMeta" style="display:none;">
+      <div class="lbl" id="foldersExamDate"></div>
+      <div class="note" id="foldersCountdown"></div>
+    </div>
+    <div class="folder-grid">
+      <div class="folder-card" onclick="openFolder('suggestions')">
+        <div class="f-ic">📄</div>
+        <h3>Suggestions</h3>
+        <p>Exam-focused suggestion sets</p>
+        <span class="cnt" id="suggCount">0 items</span>
+      </div>
+      <div class="folder-card" onclick="openFolder('materials')">
+        <div class="f-ic">📚</div>
+        <h3>Study Materials</h3>
+        <p>Notes (PDF) &amp; video explanations</p>
+        <span class="cnt" id="matCount">0 items</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: ITEM LIST (inside a folder) ============ -->
+  <section id="screen-items" class="screen">
+    <div class="back-row"><button class="btn btn-outline btn-sm" onclick="showScreen('screen-folders')">← Back</button></div>
+    <div class="section-title"><div class="st-line"></div><span class="txt" id="itemsHeading">Items</span><div class="st-line"></div></div>
+    <div id="itemsList"></div>
+  </section>
+
+  <footer>Wise Choice · Suggestion Hub · Built for smart, focused exam preparation</footer>
+
+</div>
+
+<!-- ============================================================================================
+     ██  EDIT ZONE STARTS HERE  ██
+     This is the ONLY part of this file you should ever need to change.
+
+     1) SEMESTER LABEL — update this every semester, before exams:
+============================================================================================= -->
+<script>
+const SEMESTER_CONFIG = {
+  label: "Semester 3 — 2026",              // shown in the banner under the title
+  note: "Suggestions updated as per latest syllabus"   // small note under the label
+};
+
+const YOUTUBE_CONFIG = {
+  channelName: "Wise Choice",                                  // shown on the welcome screen
+  channelUrl: "https://youtube.com/@wisexchoice?si=MxajqycyXVKpC3bp",   // opened when "Visit & Subscribe" is tapped
+  logoUrl: ""   // OPTIONAL: put a logo image file in the same folder as this HTML file and put its
+                // filename here (e.g. "wise-choice-logo.png") to show it instead of the ▶️ icon.
+                // Leave it as "" to just keep the default icon.
+};
+</script>
+
+<!-- 2) SUBJECT FILES — one file per subject, organised by stream (ba / bsc / bcom).
+        To ADD a new subject:
+          a) Create a new file, e.g. content/ba/newsubject.js (copy an existing one as a template)
+          b) Add a <script src="..."> line for it below
+          c) Add one line for it inside the BA_BANK / BSC_BANK / BCOM_BANK object further down
+        You never need to edit anything below the "END OF EDIT ZONE" line.
+
+        IMPORTANT: it's completely fine to add a subject here (steps b + c) before you've
+        actually uploaded its file yet, and it's fine to build one stream (e.g. B.A.) fully
+        before starting another. Missing files are simply skipped — they will never break
+        the rest of the site. -->
+
+<script src="content/ba/bengali.js"></script>
+<script src="content/ba/english.js"></script>
+<script src="content/ba/history.js"></script>
+<script src="content/ba/politicalscience.js"></script>
+<script src="content/ba/philosophy.js"></script>
+<script src="content/ba/urdu.js"></script>
+<script src="content/ba/arabic.js"></script>
+<script src="content/ba/defensestudies.js"></script>
+<script src="content/ba/economics.js"></script>
+<script src="content/ba/education.js"></script>
+<script src="content/ba/filmstudies.js"></script>
+<script src="content/ba/hindi.js"></script>
+<script src="content/ba/islamichistory.js"></script>
+<script src="content/ba/journalism.js"></script>
+<script src="content/ba/persian.js"></script>
+<script src="content/ba/physicaleducation.js"></script>
+<script src="content/ba/sanskrit.js"></script>
+<script src="content/ba/sociology.js"></script>
+<script src="content/ba/womenstudies.js"></script>
+
+<script src="content/bsc/physics.js"></script>
+<script src="content/bsc/chemistry.js"></script>
+<script src="content/bsc/mathematics.js"></script>
+<script src="content/bsc/botany.js"></script>
+<script src="content/bsc/zoology.js"></script>
+<script src="content/bsc/computerscience.js"></script>
+
+<!-- B.Com uses ONE combined file instead of one-file-per-subject — simpler to manage.
+     All 6 subjects live inside content/bcom/commerce.js as the BCOM_COMMERCE object. -->
+<script src="content/bcom/commerce.js"></script>
+
+<script>
+/* =====================================================================================
+   These three BANK objects list which subjects appear under each tab, and in what
+   order. To add a subject: add one line here with a short key and the variable name
+   from its file (see step "c" above). To remove one temporarily: delete or comment
+   out its line — the site will just skip it.
+
+   "safe(...)" below simply checks the file actually loaded before including it — so if
+   a file is missing, not-yet-uploaded, or has a typo, that ONE subject is skipped
+   instead of breaking the entire site. You never need to touch the safe(...) function
+   itself — just list your subjects normally inside each BANK below.
+   ===================================================================================== */
+function safe(varRef){ return (typeof varRef !== 'undefined') ? varRef : null; }
+
+const BA_BANK = {
+  bengali: safe(typeof BA_BENGALI!=='undefined'?BA_BENGALI:undefined),
+  english: safe(typeof BA_ENGLISH!=='undefined'?BA_ENGLISH:undefined),
+  history: safe(typeof BA_HISTORY!=='undefined'?BA_HISTORY:undefined),
+  politicalscience: safe(typeof BA_POLITICALSCIENCE!=='undefined'?BA_POLITICALSCIENCE:undefined),
+  philosophy: safe(typeof BA_PHILOSOPHY!=='undefined'?BA_PHILOSOPHY:undefined),
+  urdu: safe(typeof BA_URDU!=='undefined'?BA_URDU:undefined),
+  arabic: safe(typeof BA_ARABIC!=='undefined'?BA_ARABIC:undefined),
+  defensestudies: safe(typeof BA_DEFENSESTUDIES!=='undefined'?BA_DEFENSESTUDIES:undefined),
+  economics: safe(typeof BA_ECONOMICS!=='undefined'?BA_ECONOMICS:undefined),
+  education: safe(typeof BA_EDUCATION!=='undefined'?BA_EDUCATION:undefined),
+  filmstudies: safe(typeof BA_FILMSTUDIES!=='undefined'?BA_FILMSTUDIES:undefined),
+  hindi: safe(typeof BA_HINDI!=='undefined'?BA_HINDI:undefined),
+  islamichistory: safe(typeof BA_ISLAMICHISTORY!=='undefined'?BA_ISLAMICHISTORY:undefined),
+  journalism: safe(typeof BA_JOURNALISM!=='undefined'?BA_JOURNALISM:undefined),
+  persian: safe(typeof BA_PERSIAN!=='undefined'?BA_PERSIAN:undefined),
+  physicaleducation: safe(typeof BA_PHYSICALEDUCATION!=='undefined'?BA_PHYSICALEDUCATION:undefined),
+  sanskrit: safe(typeof BA_SANSKRIT!=='undefined'?BA_SANSKRIT:undefined),
+  sociology: safe(typeof BA_SOCIOLOGY!=='undefined'?BA_SOCIOLOGY:undefined),
+  womenstudies: safe(typeof BA_WOMENSTUDIES!=='undefined'?BA_WOMENSTUDIES:undefined),
+};
+
+const BSC_BANK = {
+  physics: safe(typeof BSC_PHYSICS!=='undefined'?BSC_PHYSICS:undefined),
+  chemistry: safe(typeof BSC_CHEMISTRY!=='undefined'?BSC_CHEMISTRY:undefined),
+  mathematics: safe(typeof BSC_MATHEMATICS!=='undefined'?BSC_MATHEMATICS:undefined),
+  botany: safe(typeof BSC_BOTANY!=='undefined'?BSC_BOTANY:undefined),
+  zoology: safe(typeof BSC_ZOOLOGY!=='undefined'?BSC_ZOOLOGY:undefined),
+  computerscience: safe(typeof BSC_COMPUTERSCIENCE!=='undefined'?BSC_COMPUTERSCIENCE:undefined),
+};
+
+/* B.Com is a single combined file (content/bcom/commerce.js -> BCOM_COMMERCE) instead
+   of one file per subject. To add a new B.Com subject, just add one more entry inside
+   that file — no <script> line or BANK line needed here. */
+const BCOM_BANK = (typeof BCOM_COMMERCE !== 'undefined') ? BCOM_COMMERCE : {};
+
+/* =====================================================================================
+   ██  END OF EDIT ZONE  ██  — nothing below this line needs to be touched.
+   ===================================================================================== */
+
+const STREAM_BANKS = { ba: BA_BANK, bsc: BSC_BANK, bcom: BCOM_BANK };
+let currentStream = null;
+let currentSubjectKey = null;
+
+/* ---------------------------- YOUTUBE SUBSCRIBE GATE ---------------------------- */
+/* Shows on every page load — no longer remembers past visits, so it will always
+   greet visitors before they enter the site. */
+function visitChannel(){
+  window.open(YOUTUBE_CONFIG.channelUrl, '_blank');
+  const btn = document.getElementById('ytContinueBtn');
+  btn.disabled = false;
+  btn.innerText = '✅ Continue to Suggestion Hub';
+}
+function closeYtGate(){
+  document.getElementById('ytGate').style.display = 'none';
+  document.body.classList.remove('gate-open');
+}
+(function initYtGate(){
+  document.getElementById('ytChannelNameLabel').innerText = YOUTUBE_CONFIG.channelName;
+  if(YOUTUBE_CONFIG.logoUrl){
+    document.getElementById('ytLogoBox').innerHTML = `<img src="${YOUTUBE_CONFIG.logoUrl}" alt="${YOUTUBE_CONFIG.channelName} logo">`;
+  }
+  document.body.classList.add('gate-open');
+})();
+
+/* ---------------------------- THEME ---------------------------- */
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggleBtn').innerText = theme === 'light' ? '☀️' : '🌙';
+  try{ localStorage.setItem('wc_theme', theme); }catch(e){}
+}
+function toggleTheme(){
+  const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  applyTheme(current === 'light' ? 'dark' : 'light');
+}
+(function initTheme(){
+  let saved = null;
+  try{ saved = localStorage.getItem('wc_theme'); }catch(e){}
+  applyTheme(saved === 'light' ? 'light' : 'dark');
+})();
+
+/* ---------------------------- NAVIGATION ---------------------------- */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+
+  const isRoot = (id==='screen-ba' || id==='screen-bsc' || id==='screen-bcom');
+  document.getElementById('topTabs').style.display = isRoot ? 'flex' : 'none';
+  if(isRoot){
+    document.getElementById('tabBA').classList.toggle('active', id==='screen-ba');
+    document.getElementById('tabBSC').classList.toggle('active', id==='screen-bsc');
+    document.getElementById('tabBCOM').classList.toggle('active', id==='screen-bcom');
+  }
+}
+
+function setTopTab(stream){
+  showScreen('screen-'+stream);
+  buildStreamGrid(stream);
+}
+
+/* Formats a subject's examDate ("YYYY-MM-DD") into a display string + countdown.
+   Returns null if examDate is empty/missing. */
+function formatExamDate(dateStr){
+  if(!dateStr) return null;
+  const d = new Date(dateStr+'T00:00:00');
+  if(isNaN(d)) return null;
+  const now = new Date(); now.setHours(0,0,0,0);
+  const diffDays = Math.round((d - now) / 86400000);
+  const dispDate = d.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  let countdown;
+  if(diffDays > 1) countdown = `📅 ${diffDays} days left`;
+  else if(diffDays === 1) countdown = '📅 Exam Tomorrow!';
+  else if(diffDays === 0) countdown = '📅 Exam Today!';
+  else countdown = 'Exam completed';
+  return { dispDate, countdown, diffDays };
+}
+
+function buildStreamGrid(stream){
+  const bank = STREAM_BANKS[stream];
+  const grid = document.getElementById(stream+'Grid');
+  grid.innerHTML = '';
+  Object.keys(bank).forEach(key=>{
+    const subj = bank[key];
+    if(!subj) return;
+    const suggCount = (subj.suggestions || []).length;
+    const matCount = (subj.materials || []).length;
+    const status = subj.status || 'pending';
+    const statusHTML = status === 'ready'
+      ? `<span class="status-badge ready">✅ Ready</span>`
+      : `<span class="status-badge pending">⏳ Coming Soon</span>`;
+    const examInfo = formatExamDate(subj.examDate);
+    const examHTML = examInfo ? `<span class="exam-date">📅 ${examInfo.dispDate}</span>` : '';
+    const card = document.createElement('div');
+    card.className = 'subject-card';
+    card.innerHTML = `
+      <div class="icon-badge">${subj.icon || '📘'}</div>
+      <h3>${subj.name}</h3>
+      <p>Suggestions &amp; Study Materials</p>
+      ${examHTML}
+      ${statusHTML}
+      <span class="cnt">${suggCount + matCount} item${(suggCount+matCount)===1?'':'s'}</span>`;
+    card.onclick = ()=>openSubjectFolders(stream, key);
+    grid.appendChild(card);
+  });
+}
+
+function openSubjectFolders(stream, key){
+  currentStream = stream;
+  currentSubjectKey = key;
+  const subj = STREAM_BANKS[stream][key];
+  document.getElementById('foldersHeading').innerText = subj.name;
+  document.getElementById('suggCount').innerText = (subj.suggestions||[]).length + ' item' + ((subj.suggestions||[]).length===1?'':'s');
+  document.getElementById('matCount').innerText = (subj.materials||[]).length + ' item' + ((subj.materials||[]).length===1?'':'s');
+  document.getElementById('foldersBackBtn').onclick = ()=>showScreen('screen-'+stream);
+
+  const examInfo = formatExamDate(subj.examDate);
+  const metaBox = document.getElementById('foldersMeta');
+  if(examInfo){
+    metaBox.style.display = 'block';
+    document.getElementById('foldersExamDate').innerText = 'Exam Date: ' + examInfo.dispDate;
+    document.getElementById('foldersCountdown').innerText = examInfo.countdown;
+  } else {
+    metaBox.style.display = 'none';
+  }
+
+  showScreen('screen-folders');
+}
+
+function openFolder(folderType){
+  const subj = STREAM_BANKS[currentStream][currentSubjectKey];
+  const items = subj[folderType] || [];
+  document.getElementById('itemsHeading').innerText = subj.name + ' — ' + (folderType==='suggestions' ? 'Suggestions' : 'Study Materials');
+  const list = document.getElementById('itemsList');
+  list.innerHTML = '';
+  if(items.length === 0){
+    list.innerHTML = '<div class="ca-empty">No items added here yet.</div>';
+  } else {
+    items.forEach(item=>{
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      const icon = item.type === 'youtube' ? '▶️' : '📄';
+      const typeLabel = item.type === 'youtube' ? 'YouTube Video' : 'PDF Document';
+      row.innerHTML = `
+        <div class="i-ic">${icon}</div>
+        <div class="i-body">
+          <h4>${item.title}</h4>
+          <div class="i-type">${typeLabel}</div>
+        </div>
+        <div class="i-arrow">↗</div>`;
+      row.onclick = ()=>window.open(item.url, '_blank');
+      list.appendChild(row);
+    });
+  }
+  showScreen('screen-items');
+}
+
+/* ---------------------------- BOOT ---------------------------- */
+document.getElementById('semesterLabel').innerText = SEMESTER_CONFIG.label;
+document.getElementById('semesterNote').innerText = SEMESTER_CONFIG.note;
+buildStreamGrid('ba');
+</script>
+
+</body>
+</html>
